@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,7 +7,11 @@ import {
   Menu,
   MenuItem,
   Fab,
-  Link
+  Drawer,
+  Link,
+  Grid,
+  Divider,
+  Card
 } from "@material-ui/core";
 import {
   Menu as MenuIcon,
@@ -17,10 +21,20 @@ import {
   Search as SearchIcon,
   Send as SendIcon,
   ArrowBack as ArrowBackIcon,
-  ShoppingCartOutlined as Cart
+  ShoppingCartOutlined as Cart,
+  Delete
 } from "@material-ui/icons";
 import classNames from "classnames";
 
+import { useHistory } from 'react-router-dom';
+
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 // styles
 import useStyles from "./styles";
 
@@ -28,45 +42,18 @@ import useStyles from "./styles";
 import { Badge, Typography, Button } from "../Wrappers";
 import Notification from "../Notification/Notification";
 import UserAvatar from "../UserAvatar/UserAvatar";
-
+import FavoriteIcon from '@material-ui/icons/Favorite';
 // context
 import {
   useLayoutState,
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
-import { useUserDispatch, signOut } from "../../context/UserContext";
+import { useUserDispatch, signOut, useUserState, removeItem } from "../../context/UserContext";
 
-const messages = [
-  // {
-  //   id: 0,
-  //   variant: "warning",
-  //   name: "Jane Hew",
-  //   message: "Hey! How is it going?",
-  //   time: "9:32",
-  // },
-  // {
-  //   id: 1,
-  //   variant: "success",
-  //   name: "Lloyd Brown",
-  //   message: "Check out my new Dashboard",
-  //   time: "9:18",
-  // },
-  // {
-  //   id: 2,
-  //   variant: "primary",
-  //   name: "Mark Winstein",
-  //   message: "I want rearrange the appointment",
-  //   time: "9:15",
-  // },
-  // {
-  //   id: 3,
-  //   variant: "secondary",
-  //   name: "Liana Dutti",
-  //   message: "Good news from sale department",
-  //   time: "9:09",
-  // },
-];
+import { getCartItems, removeFromCart, setCartQuantity, updateCartQunatityApi } from '../Product/service/cart'
+
+const messages = [];
 
 const notifications = [
   { id: 0, color: "warning", message: "Check out this awesome ticket" },
@@ -92,11 +79,17 @@ const notifications = [
 
 export default function Header(props) {
   var classes = useStyles();
+  var userState = useUserState();
+const history = useHistory()
+
+
+  const [drawer, setDrawer] = useState(userState.isDrawerOpen);
 
   // global
   var layoutState = useLayoutState();
   var layoutDispatch = useLayoutDispatch();
   var userDispatch = useUserDispatch();
+  console.log(userState, "----");
 
   // local
   var [mailMenu, setMailMenu] = useState(null);
@@ -105,6 +98,55 @@ export default function Header(props) {
   var [isNotificationsUnread, setIsNotificationsUnread] = useState(true);
   var [profileMenu, setProfileMenu] = useState(null);
   var [isSearchOpen, setSearchOpen] = useState(true);
+  var [cartItems, setCartItems] = useState([]);
+  const [isLoading, setisLoading] = useState(false)
+
+  function updateQuantity(cartId, quantity) {
+    if (quantity > -1) {
+      setisLoading(true)
+      updateCartQunatityApi(cartId, { quantity }).then(res => {
+        getCartItems().then(re => {
+          setCartItems(re)
+        });
+        setisLoading(false);
+
+      }).catch(err => {
+        setisLoading(false)
+
+      })
+    }
+  }
+
+  function removeFromCartItem(product) {
+    // setisLoading(true);
+    removeFromCart(product).then(res => {
+      getCartItems().then(res => {
+        setCartItems(res);
+        removeItem(userDispatch)
+      })
+      setisLoading(false);
+
+    })
+  }
+
+  function getCartItemsLocal() {
+    getCartItems().then(re => {
+      setCartItems(re)
+    })
+  }
+
+
+
+  useEffect(() => {
+    console.log("USE EFFECT");
+    setDrawer(userState.isDrawerOpen)
+    getCartItems().then(re => {
+      setCartItems(re)
+    })
+    return () => {
+
+    }
+  }, [])
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -138,10 +180,10 @@ export default function Header(props) {
             )}
         </IconButton>
         <Typography variant="h6" weight="medium" className={classes.logotype}>
-          Mobistore
+          Mobi Store
         </Typography>
         <div className={classes.grow} />
-        {/* <Button component={Link} href="https://google.com/templates/react-material-admin-full" variant={"outlined"} color={"secondary"} className={classes.purchaseBtn}>Unlock full version</Button> */}
+        {/* <Button component={Link} href="https://google.com/templates/react-material-admin-full" variant={"outlined"} color={"secondary"} className={classes.purchaseBtn}>Unlock full version</Button>
         <div
           className={classNames(classes.search, {
             [classes.searchFocused]: isSearchOpen,
@@ -162,11 +204,12 @@ export default function Header(props) {
               input: classes.inputInput,
             }}
           />
-        </div>
-        <IconButton
+        </div> */}
+        {/* <IconButton
           color="inherit"
           aria-haspopup="true"
           aria-controls="mail-menu"
+          onClick={() => { setDrawer(!drawer); getCartItemsLocal(); }}
           onClick={e => {
             setNotificationsMenu(e.currentTarget);
             setIsNotificationsUnread(false);
@@ -177,9 +220,9 @@ export default function Header(props) {
             badgeContent={isNotificationsUnread ? notifications.length : null}
             color="warning"
           >
-            <NotificationsIcon classes={{ root: classes.headerIcon }} />
+          <FavoriteIcon classes={{ root: classes.headerIcon }} />
           </Badge>
-        </IconButton>
+        </IconButton> */}
 
         <IconButton
           aria-haspopup="true"
@@ -194,10 +237,11 @@ export default function Header(props) {
           color="inherit"
           aria-haspopup="true"
           aria-controls="mail-menu"
-          onClick={e => {
-            setMailMenu(e.currentTarget);
-            setIsMailsUnread(false);
-          }}
+          onClick={() => { setDrawer(!drawer); getCartItemsLocal(); }}
+          // onClick={e => {
+          //   setMailMenu(e.currentTarget);
+          //   setIsMailsUnread(false);
+          // }}
           className={classes.headerMenuButton}
         >
           <Badge
@@ -291,7 +335,7 @@ export default function Header(props) {
         >
           <div className={classes.profileMenuUser}>
             <Typography variant="h4" weight="medium">
-              John Smith
+              {userState.name}
             </Typography>
             {/* <Typography
               className={classes.profileMenuLink}
@@ -302,14 +346,19 @@ export default function Header(props) {
               Flalogic.com
             </Typography> */}
           </div>
-          <MenuItem
-            className={classNames(
-              classes.profileMenuItem,
-              classes.headerMenuItem,
-            )}
-          >
-            <AccountIcon className={classes.profileMenuIcon} /> Profile
+         
+            <MenuItem
+            onClick={()=> history.push('/app/user/edit')}
+              className={classNames(
+                classes.profileMenuItem,
+                classes.headerMenuItem,
+              )}
+            >
+
+              <AccountIcon className={classes.profileMenuIcon} />  <Link to={'/app/user/edit'}>Profile
+                </Link>
           </MenuItem>
+
           {/* <MenuItem
             className={classNames(
               classes.profileMenuItem,
@@ -336,6 +385,67 @@ export default function Header(props) {
             </Typography>
           </div>
         </Menu>
+        {/* <Button onClick={() => setDrawer(!drawer)}>anchor</Button> */}
+        <Drawer anchor="right" open={drawer} onClose={() => setDrawer(!drawer)} >
+          <div style={{ width: '500px', overflow: 'auto' }}>
+            <Card style={{ padding: '20px 30px', position: "fixed", width: '100%' }}>
+              <Typography variant="h6" weight="medium">Cart</Typography>
+            </Card>
+
+            <Grid wrap="nowrap" style={{ marginTop: '70px' }}><List component="nav" aria-label="main mailbox folders">
+              {cartItems.map(cart => <><Link to={'/app/product/edit/' + cart.product.id}><ListItem button >
+                <ListItemIcon>
+                  <AvatarGroup max={2}>
+                    {cart.product.images.map(image => <Avatar alt="Remy Sharp" src={'http://localhost:5000/' + image.path} />)}
+                  </AvatarGroup>
+                </ListItemIcon>
+                <ListItemText style={{ margin: '0 20px' }} primary={cart.product.name} secondary={
+                  <React.Fragment>
+                    <Button size="medium" color="secondary" disabled={cart.quantity === 0}
+                      onClick={(e) => { e.stopPropagation(); e.preventDefault(); e.nativeEvent.stopImmediatePropagation(); updateQuantity(cart.id, cart.quantity - 1) }}>
+                      -
+                    </Button>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      className={classes.inline}
+                      color="textPrimary"
+                    >
+                      {cart.quantity}
+                    </Typography>
+                    <Button size="medium" color="primary"
+                      onClick={(e) => { e.stopPropagation(); e.preventDefault(); e.nativeEvent.stopImmediatePropagation(); updateQuantity(cart.id, cart.quantity + 1) }}>+</Button>
+
+                    <Button size="medium" color="secondary"
+                      onClick={(e) => { e.stopPropagation(); e.preventDefault(); e.nativeEvent.stopImmediatePropagation(); removeFromCartItem(cart.product.id); }}>
+                      <Delete />
+                    </Button>
+                  </React.Fragment>
+                } />
+
+                {/* <ListItemText style={{ margin: '0 20px' }} primary={cart.product.name} secondary={'$ ' + (cart.product.prize * cart.quantity) + '/-   Quantity: ' + String(cart.quantity)} /> */}
+              </ListItem><Divider /></Link></>)}
+            </List>
+            </Grid>
+            <Grid justify="center">
+              <Card style={{ padding: '20px 30px', position: "fixed", width: '100%', bottom: '0' }}>
+                <Divider />
+                <Fab
+                  variant="extended"
+                  color="primary"
+                  disabled={!cartItems.length}
+                  aria-label="Add"
+                  className={classes.sendMessageButton}
+                >
+                  CheckOut
+            <SendIcon className={classes.sendButtonIcon} />
+                </Fab>
+              </Card>
+            </Grid>
+
+          </div>
+
+        </Drawer>
       </Toolbar>
     </AppBar>
   );

@@ -1,30 +1,11 @@
-# Kart - Mobistore
-
-Built with [React](https://facebook.github.io/react/), [Material-UI](https://material-ui.com), [React Router](https://reacttraining.com/react-router/).
-**No jQuery and Bootstrap!**
-
-**This version uses React 16.14.0, React Router v5, MaterialUI v4, built with React Hooks and React Context (No Redux)**
-
-[View Demo](https://google.com/templates/react-material-admin/demo) | [Download](https://github.com/flatlogic/react-material-admin/archive/master.zip) | [More templates](https://google.com/templates) | [Support forum](https://google.com/forum)
-
-[![image](https://user-images.githubusercontent.com/24964748/55800639-df780300-5adc-11e9-84b7-7c2437088516.png)](https://google.com/admin-dashboards/react-material-admin/demo)
-
-
+# Kart - Mobi Store
 
 ## Features
 
-- React (**16.14.0**)
-- React Hooks
-- React Context
-- **No jQuery and Bootstrap!**
-- Mobile friendly layout (responsive)
-- Create-react-app under the hood
-- React Router v5
-- Material-UI v4
-- Modular Architecture
-- CSS-in-JS styles
-- Webpack build
-- Stylish, clean, responsive layout
+- View Products 
+- Add Products - Admin
+- Search Products
+- Buy Products
 - Authentication
 
 ## Pages
@@ -32,10 +13,12 @@ Built with [React](https://facebook.github.io/react/), [Material-UI](https://mat
 We have implemented some basic pages, so you can see our template in action.
 
 - Dashboard
-- Tables
-- Notifications
+- Product View
+- Cart
+- User Data Update
 - Login
-- Error
+- Register
+- Forgot Password
 
 ## Quick Start
 

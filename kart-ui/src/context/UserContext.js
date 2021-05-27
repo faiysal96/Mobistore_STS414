@@ -8,11 +8,11 @@ function userReducer(state, action) {
   switch (action.type) {
     case "LOGIN_SUCCESS":
       console.log("Heloo", action);
-      return { ...state, isAuthenticated: true, isAdmin: action.isAdmin ? action.isAdmin : false };
-    case "LOGIN_FAILURE":
-      return { ...state, isAuthenticated: false };
+      return { ...state, isAuthenticated: true, role: action.role, name: action.name };
     case "SIGN_OUT_SUCCESS":
       return { ...state, isAuthenticated: false };
+    case "NONE":
+      return { ...state, isDrawerOpen: true }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -23,7 +23,9 @@ function UserProvider({ children }) {
   var [state, dispatch] = React.useReducer(userReducer, {
     isAuthenticated: !!localStorage.getItem("id_token"),
     isSeller: false,
-    isAdmin: !!localStorage.getItem("isAdmin")
+    isDrawerOpen: false,
+    name: localStorage.getItem("role"),
+    role: localStorage.getItem("role"),
   });
 
   return (
@@ -51,10 +53,14 @@ function useUserDispatch() {
   return context;
 }
 
-export { UserProvider, useUserState, useUserDispatch, loginUser, registerUser, signOut };
+export { UserProvider, useUserState, useUserDispatch, loginUser, registerUser, signOut, removeItem };
 
 // ###########################################################
 
+function removeItem(dispatch) {
+  dispatch({type: 'NONE'})
+
+}
 function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
