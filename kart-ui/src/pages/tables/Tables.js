@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import MUIDataTable from "mui-datatables";
@@ -10,6 +10,8 @@ import Table from "../dashboard/components/Table/Table";
 
 // data
 import mock from "../dashboard/mock";
+
+import { getOrders } from "../checkout/services/order.service";
 
 const datatableData = [
   ["Iphone 12", "Apple Inc.", "1000$", "Pending"],
@@ -32,6 +34,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function Tables() {
   const classes = useStyles();
+
+  const [orders, setorders] = useState([])
+
+  useEffect(() => {
+    getOrders().then(res => {
+      setorders(res)
+    })
+    return () => {
+
+    }
+  }, [])
+
+
   return (
     <>
       <PageTitle title="Orders" />
@@ -46,12 +61,18 @@ export default function Tables() {
             }}
           />
         </Grid> */}
+
         <Grid item xs={12}>
           <Widget title="Previous Orders" upperTitle noBodyPadding bodyClass={classes.tableOverflow}>
-            <Table data={mock.table} />
+            <Table data={orders} />
           </Widget>
-        </Grid>
       </Grid>
+      {/* <Grid item xs={12}>
+        <Widget title="Previous Orders" upperTitle noBodyPadding bodyClass={classes.tableOverflow}>
+          <Table data={mock.table} />
+        </Widget>
+      </Grid> */}
+    </Grid>
     </>
   );
 }
