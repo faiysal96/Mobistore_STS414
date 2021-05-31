@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+import { Link } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -8,7 +10,6 @@ import {
   MenuItem,
   Fab,
   Drawer,
-  Link,
   Grid,
   Divider,
   Card
@@ -80,7 +81,7 @@ const notifications = [
 export default function Header(props) {
   var classes = useStyles();
   var userState = useUserState();
-const history = useHistory()
+  const history = useHistory()
 
 
   const [drawer, setDrawer] = useState(userState.isDrawerOpen);
@@ -226,6 +227,7 @@ const history = useHistory()
 
         <IconButton
           aria-haspopup="true"
+          id="accountBtn"
           color="inherit"
           className={classes.headerMenuButton}
           aria-controls="profile-menu"
@@ -235,6 +237,7 @@ const history = useHistory()
         </IconButton>
         <IconButton
           color="inherit"
+          id="cartBtn"
           aria-haspopup="true"
           aria-controls="mail-menu"
           onClick={() => { setDrawer(!drawer); getCartItemsLocal(); }}
@@ -346,16 +349,16 @@ const history = useHistory()
               Flalogic.com
             </Typography> */}
           </div>
-         
-            <MenuItem
-            onClick={()=> history.push('/app/user/edit')}
-              className={classNames(
-                classes.profileMenuItem,
-                classes.headerMenuItem,
-              )}
-            >
 
-              <AccountIcon className={classes.profileMenuIcon} />  <Link to={'/app/user/edit'}>Profile
+          <MenuItem
+            onClick={() => history.push('/app/user/edit')}
+            className={classNames(
+              classes.profileMenuItem,
+              classes.headerMenuItem,
+            )}
+          >
+
+            <AccountIcon className={classes.profileMenuIcon} />  <Link to={'/app/user/edit'}>Profile
                 </Link>
           </MenuItem>
 
@@ -379,6 +382,7 @@ const history = useHistory()
             <Typography
               className={classes.profileMenuLink}
               color="primary"
+              id="signOutText"
               onClick={() => signOut(userDispatch, props.history)}
             >
               Sign Out
@@ -392,7 +396,7 @@ const history = useHistory()
               <Typography variant="h6" weight="medium">Cart</Typography>
             </Card>
 
-            <Grid wrap="nowrap" style={{ marginTop: '70px' }}><List component="nav" aria-label="main mailbox folders">
+            <Grid wrap="nowrap" style={{ marginTop: '70px' }}><List component="nav" aria-label="main mailbox folders" id="cartContent">
               {cartItems.map(cart => <><Link to={'/app/product/edit/' + cart.product.id}><ListItem button >
                 <ListItemIcon>
                   <AvatarGroup max={2}>
@@ -420,6 +424,8 @@ const history = useHistory()
                       onClick={(e) => { e.stopPropagation(); e.preventDefault(); e.nativeEvent.stopImmediatePropagation(); removeFromCartItem(cart.product.id); }}>
                       <Delete />
                     </Button>
+
+                    <Typography variant="h6">$ {cart.quantity * cart.product.prize} /-</Typography>
                   </React.Fragment>
                 } />
 
@@ -433,6 +439,7 @@ const history = useHistory()
                 <Fab
                   variant="extended"
                   color="primary"
+                  onClick={() => { setDrawer(false); history.push('/app/checkout') }}
                   disabled={!cartItems.length}
                   aria-label="Add"
                   className={classes.sendMessageButton}
@@ -442,9 +449,7 @@ const history = useHistory()
                 </Fab>
               </Card>
             </Grid>
-
           </div>
-
         </Drawer>
       </Toolbar>
     </AppBar>
