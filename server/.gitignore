@@ -6,10 +6,8 @@
 # ENV VARIABLES
 .env
 
-upload
-
-public/build
 public/media
+upload
 # User-specific stuff:
 .idea/**/workspace.xml
 .idea/**/tasks.xml
