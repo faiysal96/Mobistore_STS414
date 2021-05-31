@@ -1,0 +1,11 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "!Montreal",
+    "database": "kart" ,
+    "synchronize": true,
+    "autoLoadEntities": true,
+    "entities": ["./src/modules/**/*.entity{.ts,.js}", "./dist/modules/**/*.entity.js"]
+}

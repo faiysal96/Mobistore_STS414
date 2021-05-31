@@ -5,6 +5,13 @@ import { Connection } from "typeorm";
 import { UserRepository } from '../../modules/user/repositories/user.repository'
 import { Injectable } from "@nestjs/common";
 
+// export default class UserSeeder implements Seeder {
+//     public async run(factory: Factory, connection: Connection): Promise<any> {
+//       await factory(UserEntity)().createMany(5);
+//     }
+//   }
+
+
 let users = [
     {
         firstName: 'Admin',

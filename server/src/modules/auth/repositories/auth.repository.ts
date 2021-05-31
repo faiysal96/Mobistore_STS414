@@ -43,9 +43,8 @@ export class AuthRepository extends Repository<UserEntity> {
 
     if (user && await user.validatePassword(password)) {
       return { email: user.email, role: user.role, name: user.firstName + ' ' + user.lastName };
-    } else {
-      return null;
-    }
+    } 
+    return {email :null };
   }
 
   private async hashPassword(password: string, salt: string): Promise<string> {
