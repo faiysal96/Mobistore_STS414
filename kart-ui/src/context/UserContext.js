@@ -25,7 +25,7 @@ function UserProvider({ children }) {
     isSeller: false,
     isDrawerOpen: false,
     name: localStorage.getItem("name"),
-    role: localStorage.getItem("role"),
+    role: localStorage.getItem("role") || 'USER',
   });
 
   return (

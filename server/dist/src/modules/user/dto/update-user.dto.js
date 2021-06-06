@@ -35,7 +35,7 @@ __decorate([
 __decorate([
     class_validator_1.IsOptional(),
     swagger_1.ApiProperty(),
-    class_validator_1.IsIn([user_role_enum_1.UserRole.ADMIN, user_role_enum_1.UserRole.MANAGER, user_role_enum_1.UserRole.USER, user_role_enum_1.UserRole.GHOST, user_role_enum_1.UserRole.GUEST]),
+    class_validator_1.IsIn([user_role_enum_1.UserRole.ADMIN, user_role_enum_1.UserRole.USER]),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "role", void 0);
 exports.UpdateUserDto = UpdateUserDto;

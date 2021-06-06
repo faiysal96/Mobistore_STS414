@@ -13,7 +13,7 @@ typeorm_seeding_1.define(user_entity_1.UserEntity, (faker) => {
     user.salt = bcrypt.genSaltSync();
     user.password = bcrypt.hashSync(faker.random.word(), user.salt);
     user.phone = faker.phone.phoneNumberFormat();
-    user.role = faker.random.arrayElement([user_role_enum_1.UserRole.ADMIN, user_role_enum_1.UserRole.MANAGER, user_role_enum_1.UserRole.GUEST, user_role_enum_1.UserRole.GHOST]);
+    user.role = faker.random.arrayElement([user_role_enum_1.UserRole.ADMIN, user_role_enum_1.UserRole.USER]);
     return user;
 });
 //# sourceMappingURL=user.factory.js.map

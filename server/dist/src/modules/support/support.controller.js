@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b, _c, _d, _e, _f;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SupportController = void 0;
 const common_1 = require("@nestjs/common");
@@ -60,7 +59,7 @@ __decorate([
     __param(0, decorators_1.AuthUser()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.UserEntity]),
-    __metadata("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
+    __metadata("design:returntype", Promise)
 ], SupportController.prototype, "getMyPendingIssues", null);
 __decorate([
     common_1.Get('getMyIssues'),
@@ -68,7 +67,7 @@ __decorate([
     __param(0, decorators_1.AuthUser()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.UserEntity]),
-    __metadata("design:returntype", typeof (_b = typeof Promise !== "undefined" && Promise) === "function" ? _b : Object)
+    __metadata("design:returntype", Promise)
 ], SupportController.prototype, "getMyIssues", null);
 __decorate([
     common_1.Get('getIssueById/:id'),
@@ -76,7 +75,7 @@ __decorate([
     __param(0, decorators_1.AuthUser()), __param(1, common_1.Param('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.UserEntity, Number]),
-    __metadata("design:returntype", typeof (_c = typeof Promise !== "undefined" && Promise) === "function" ? _c : Object)
+    __metadata("design:returntype", Promise)
 ], SupportController.prototype, "getById", null);
 __decorate([
     common_1.Post('addIssue'),
@@ -84,7 +83,7 @@ __decorate([
     __param(0, decorators_1.AuthUser()), __param(1, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.UserEntity, support_dto_1.SupportDto]),
-    __metadata("design:returntype", typeof (_d = typeof Promise !== "undefined" && Promise) === "function" ? _d : Object)
+    __metadata("design:returntype", Promise)
 ], SupportController.prototype, "getSellerProducts", null);
 __decorate([
     common_1.Post('updateIssueConv/:issueId'),
@@ -92,7 +91,7 @@ __decorate([
     __param(0, decorators_1.AuthUser()), __param(1, common_1.Param('issueId', common_1.ParseIntPipe)), __param(2, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.UserEntity, Number, Array]),
-    __metadata("design:returntype", typeof (_e = typeof Promise !== "undefined" && Promise) === "function" ? _e : Object)
+    __metadata("design:returntype", Promise)
 ], SupportController.prototype, "updateIssueConv", null);
 __decorate([
     common_1.Post('updateIssueStatus/:issueId'),
@@ -100,7 +99,7 @@ __decorate([
     __param(0, decorators_1.AuthUser()), __param(1, common_1.Param('issueId', common_1.ParseIntPipe)), __param(2, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.UserEntity, Number, support_dto_1.StatusSupportDto]),
-    __metadata("design:returntype", typeof (_f = typeof Promise !== "undefined" && Promise) === "function" ? _f : Object)
+    __metadata("design:returntype", Promise)
 ], SupportController.prototype, "updateIssueStatus", null);
 SupportController = __decorate([
     common_1.Controller('api/support'),

@@ -352,7 +352,6 @@ export default function Header(props) {
               variant="extended"
               color="primary"
               onClick={() => signOut(userDispatch, props.history)}
-              disabled={!cartItems.length}
               aria-label="Add"
               className={classes.sendMessageButton}
             >

@@ -53,7 +53,7 @@ __decorate([
     typeorm_1.Column({
         type: "enum",
         enum: user_role_enum_1.UserRole,
-        default: user_role_enum_1.UserRole.GHOST
+        default: user_role_enum_1.UserRole.USER
     }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "role", void 0);

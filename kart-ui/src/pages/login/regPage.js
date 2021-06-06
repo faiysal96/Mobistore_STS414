@@ -42,9 +42,11 @@ function RegPage(props) {
         register(firstName, lastName, loginValue, passwordValue).then(res => {
             if (res.data) {
                 localStorage.setItem('id_token', res.data.accessToken);
+                localStorage.setItem('name', res.data.name);
+                localStorage.setItem('roel', res.data.role);
                 setError(null)
                 setIsLoading(false)
-                dispatch({ type: 'LOGIN_SUCCESS' })
+                dispatch({ type: 'LOGIN_SUCCESS', role: res.data.role, name: res.data.role })
                 props.history.push('/app/dashboard')
             }
         }).catch(err => {

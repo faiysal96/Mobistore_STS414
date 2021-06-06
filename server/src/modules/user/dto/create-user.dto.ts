@@ -49,7 +49,7 @@ export class CreateUserDto {
   phone: string;
 
   @IsOptional()
-  @ApiProperty({enum: [UserRole.ADMIN, UserRole.MANAGER, UserRole.USER, UserRole.GHOST, UserRole.GUEST]})
-  @IsIn([UserRole.ADMIN, UserRole.MANAGER, UserRole.USER, UserRole.GHOST, UserRole.GUEST])
+  @ApiProperty({enum: [UserRole.ADMIN, UserRole.USER]})
+  @IsIn([UserRole.ADMIN,  UserRole.USER])
   role: UserRole;
 }

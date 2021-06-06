@@ -17,7 +17,7 @@ export class OrderItemEntity extends AbstractEntity {
   @Column({ nullable: false })
   orderId: number;
 
-  @ManyToOne(() => OrderEntity, order => order.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => OrderEntity, order => order.orderItems, { onDelete: 'CASCADE' })
   @JoinColumn()
   order: OrderEntity;
 

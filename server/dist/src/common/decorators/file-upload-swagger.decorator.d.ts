@@ -1,1 +1,1 @@
-export declare const ApiFile: () => any;
+export declare const ApiFile: () => MethodDecorator;

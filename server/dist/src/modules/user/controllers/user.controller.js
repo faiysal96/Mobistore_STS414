@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b, _c, _d, _e;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
@@ -55,7 +54,7 @@ __decorate([
     __param(1, decorators_1.AuthUser()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, user_entity_1.UserEntity]),
-    __metadata("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteUser", null);
 __decorate([
     common_1.Put('update'),
@@ -65,14 +64,14 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [update_user_dto_1.UpdateUserDto,
         user_entity_1.UserEntity]),
-    __metadata("design:returntype", typeof (_b = typeof Promise !== "undefined" && Promise) === "function" ? _b : Object)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUserInfo", null);
 __decorate([
     common_1.Get('/:id'),
     __param(0, common_1.Param('id', common_1.ParseIntPipe)), __param(1, decorators_1.AuthUser()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, user_entity_1.UserEntity]),
-    __metadata("design:returntype", typeof (_c = typeof Promise !== "undefined" && Promise) === "function" ? _c : Object)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUser", null);
 __decorate([
     common_1.Get(''),
@@ -82,7 +81,7 @@ __decorate([
     __param(1, common_1.Query('limit')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", typeof (_d = typeof Promise !== "undefined" && Promise) === "function" ? _d : Object)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUsers", null);
 __decorate([
     common_1.Post(''),
@@ -93,7 +92,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto,
         user_entity_1.UserEntity]),
-    __metadata("design:returntype", typeof (_e = typeof Promise !== "undefined" && Promise) === "function" ? _e : Object)
+    __metadata("design:returntype", Promise)
 ], UserController.prototype, "createUser", null);
 UserController = __decorate([
     common_1.Controller('api/users'),

@@ -5,6 +5,7 @@ import { ProductImageEntity } from './productimage.entity';
 export declare class ProductEntity extends AbstractEntity {
     stock: number;
     name: string;
+    type: string;
     description: string;
     prize: number;
     user: UserEntity;

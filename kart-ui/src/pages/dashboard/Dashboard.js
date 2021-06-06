@@ -94,7 +94,7 @@ export default function Dashboard(props) {
   return (
     <>
       <Grid container direction="column" justify="center" alignItems="center">
-        <Card style={{ width: '40%' }} item >
+        <Card style={{ width: '40%' }}  >
             <div className={classes.root}>
               {/* <button type="button" onClick={()=> setOpen(true)}>
                 Open menu dropdown
@@ -139,7 +139,7 @@ export default function Dashboard(props) {
       }
       {!isLoading && <Grid container alignItems="stretch" direction="row" id="productsList"
         spacing={6}>
-        {products.filter(product => product.name.toLowerCase().includes(searchKey.toLowerCase())).map(product => <Grid item lg={3} md={4} sm={6} xs={12} key={product.id}>
+        {products.filter(product => (product.name.toLowerCase()).includes(searchKey.toLowerCase())).map(product => <Grid item lg={3} md={4} sm={6} xs={12} key={product.id}>
           <Link to={'/app/product/view/' + product.id}>
             <Card className={classes.root} style={{ height: '100%' }}>
               <CardActionArea>

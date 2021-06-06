@@ -35,21 +35,21 @@ import {
 } from "../../context/UserContext";
 
 const structure = [
-  { id: 0, label: "Home", link: "/app/dashboard", icon: <HomeIcon />, role: ['USER'] },
+  { id: 1, label: "Home", link: "/app/dashboard", icon: <HomeIcon />, role: 'USER' },
 
-  { id: 2, label: "My Orders", link: "/app/my-orders", icon: <TableIcon />, role: ['USER'] },
-  
+  { id: 2, label: "My Orders", link: "/app/my-orders", icon: <TableIcon />, role: 'USER' },
+
   { id: 5, type: "divider" },
   { id: 6, type: "title", label: "SELLER", role: ['ADMIN'] },
-  { id: 7, label: "Mange Products", link: "/app/admin", icon: <LibraryIcon />, role: ['ADMIN'] },
-  { id: 8, label: "Mange Orders", link: "/app/orders-admin", icon: <TableIcon />, role: ['ADMIN'] },
-  { id: 9, label: "Mange Issues", link: "/app/support-admin", icon: <ErrorOutline />, role: ['ADMIN'] },
+  { id: 7, label: "Mange Products", link: "/app/admin", icon: <LibraryIcon />, role: 'ADMIN' },
+  { id: 8, label: "Mange Orders", link: "/app/orders-admin", icon: <TableIcon />, role: 'ADMIN' },
+  { id: 9, label: "Mange Issues", link: "/app/support-admin", icon: <ErrorOutline />, role: 'ADMIN' },
   { id: 10, type: "divider" },
-  { id: 11, type: "title", label: "HELP", role: ['USER'] },
-  { id: 12, label: "Support", link: "/app/support", icon: <SupportIcon />, role: ['USER'] },
-  { id: 13, label: "FAQ", link: "https://google.com/forum", icon: <FAQIcon />, role: ['USER'] },
+  { id: 11, type: "title", label: "HELP", role: 'USER' },
+  { id: 12, label: "Support", link: "/app/support", icon: <SupportIcon />, role: 'USER' },
+  { id: 13, label: "FAQ", link: "https://google.com/forum", icon: <FAQIcon />, role: 'USER' },
   { id: 14, type: "divider" },
-  
+
 ];
 
 function Sidebar({ location }) {
@@ -101,7 +101,7 @@ function Sidebar({ location }) {
       </div>
       <List className={classes.sidebarList}>
         {structure.map(link => (
-          (link['isAdminOnly'] && role in link.role || !link['isAdminOnly']) && <SidebarLink
+          (role === link.role || role === 'ADMIN') && <SidebarLink
             key={link.id}
             location={location}
             isSidebarOpened={isSidebarOpened}

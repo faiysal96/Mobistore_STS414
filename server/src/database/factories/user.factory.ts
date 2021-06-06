@@ -19,7 +19,7 @@ define(UserEntity, (faker: typeof Faker) => {
     user.salt =  bcrypt.genSaltSync();
     user.password =  bcrypt.hashSync(faker.random.word(), user.salt);
     user.phone = faker.phone.phoneNumberFormat();
-    user.role = faker.random.arrayElement([UserRole.ADMIN, UserRole.MANAGER, UserRole.GUEST, UserRole.GHOST]);
+    user.role = faker.random.arrayElement([UserRole.ADMIN, UserRole.USER]);
 
     return user;
   });

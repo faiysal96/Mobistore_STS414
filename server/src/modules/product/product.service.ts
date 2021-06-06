@@ -22,7 +22,7 @@ export class ProductService {
      */
     async getAll(query: string): Promise<any[]> {
         if (!query) {
-            return await this.productRepository.find({ where: { stock: MoreThan(0) }, relations: ['images'] })
+            return await this.productRepository.find({ where: { stock: MoreThan(0) }, relations: ['images'], order: { updatedAt: 'DESC' } })
         }
         return await this.productRepository.find({ where: { name: Like(`%${query}%`), stock: MoreThan(0) }, relations: ['images'] })
     }
@@ -32,7 +32,7 @@ export class ProductService {
     }
 
     async getSellerProducts(userId: number): Promise<any[]> {
-        return await this.productRepository.find({ relations: ['images'], where: { user: userId } })
+        return await this.productRepository.find({ relations: ['images'], where: { user: userId }, order: { updatedAt: 'DESC' } })
     }
 
     async addProduct(product: ProductDto, userId: number): Promise<CreatedProductDto> {

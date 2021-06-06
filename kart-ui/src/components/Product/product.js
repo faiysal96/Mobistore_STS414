@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { getProductInfo, addProduct, updateProduct, deleteProduct, addImage, removeImage, updateProductImages } from "../Admin/services/admin.service";
 
@@ -26,40 +26,42 @@ import { Skeleton } from '@material-ui/lab';
 import PageTitle from "../../components/PageTitle";
 import { Delete } from "@material-ui/icons";
 
+
+
 const BootstrapInput = withStyles((theme) => ({
     root: {
-      'label + &': {
-        marginTop: theme.spacing(3),
-      },
+        'label + &': {
+            marginTop: theme.spacing(3),
+        },
     },
     input: {
-      borderRadius: 4,
-      position: 'relative',
-      backgroundColor: theme.palette.background.paper,
-      border: '1px solid #ced4da',
-      fontSize: 16,
-      padding: '10px 26px 10px 12px',
-      transition: theme.transitions.create(['border-color', 'box-shadow']),
-      // Use the system font instead of the default Roboto font.
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-      '&:focus': {
         borderRadius: 4,
-        borderColor: '#80bdff',
-        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-      },
+        position: 'relative',
+        backgroundColor: theme.palette.background.paper,
+        border: '1px solid #ced4da',
+        fontSize: 16,
+        padding: '10px 26px 10px 12px',
+        transition: theme.transitions.create(['border-color', 'box-shadow']),
+        // Use the system font instead of the default Roboto font.
+        fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
+        ].join(','),
+        '&:focus': {
+            borderRadius: 4,
+            borderColor: '#80bdff',
+            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+        },
     },
-  }))(InputBase);
+}))(InputBase);
 
 
 
@@ -67,6 +69,8 @@ const BootstrapInput = withStyles((theme) => ({
 export default function ProductCreateAndEdit(props) {
 
     const [products, setProducts] = useState([]);
+    const history = useHistory()
+
     let { id } = useParams();
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -84,8 +88,10 @@ export default function ProductCreateAndEdit(props) {
         setisLoading(true)
         if (id) {
             if (name && description && (prize || prize == 0) && (stock || stock == 0)) {
-                updateProduct({ name, description, prize: parseFloat(prize), stock: parseInt(stock) }, id).then(res => {
+                updateProduct({ name, description, prize: parseFloat(prize), stock: parseInt(stock), type }, id).then(res => {
                     setisLoading(false)
+                    history.push('/app/admin');
+
 
                 }).catch(err => {
                     setisLoading(false)
@@ -95,9 +101,10 @@ export default function ProductCreateAndEdit(props) {
         } else {
             if (name && description && (prize || prize == 0) && (stock || stock == 0)) {
 
-                addProduct({ name, description, prize, stock, images }).then(res => {
+                addProduct({ name, description, prize, stock, images, type }).then(res => {
                     console.log(res);
-                    setisLoading(false)
+                    setisLoading(false);
+                    history.push('/app/admin');
                 })
             }
         }
@@ -114,12 +121,12 @@ export default function ProductCreateAndEdit(props) {
 
                 setisLoading(false);
                 setImages(images.concat(res));
-                updateProductImages(res, id).then(re => {
-
-                })
+                if (id) {
+                    updateProductImages(res, id).then(re => {
+                    })
+                }
             }).catch(err => {
                 setisLoading(false);
-
             });
         }
     }
@@ -157,6 +164,7 @@ export default function ProductCreateAndEdit(props) {
                 console.log(res.name);
                 setisLoading(false)
                 setName(res.name)
+                setType(res.type)
                 setDescription(res.description)
                 setPrize(res.prize);
                 setStock(res.stock);
@@ -176,7 +184,7 @@ export default function ProductCreateAndEdit(props) {
             alignItems="stretch">
             <Grid item container direction="column" justify="center"
                 alignItems="center" >
-                <Grid item  container>
+                <Grid item container>
                     <TextField fullWidth placeholder="Enter Title" type="text" variant="outlined" label="Title" style={{ width: '70%', margin: '20px' }} error={!name && formtouch} onChange={(e) => setName(e.target.value)} value={name}></TextField>
                 </Grid>
                 <Grid item container >
@@ -186,16 +194,15 @@ export default function ProductCreateAndEdit(props) {
                     <FormControl className="m-2" style={{ width: '70%', margin: '15px' }}>
                         <InputLabel id="demo-customized-select-label">Catagory</InputLabel>
                         <Select
-                            
+
                             labelId="demo-customized-select-label"
                             id="demo-customized-select"
                             value={type}
-                            onChange={(e)=> setType(e.target.value)}
+                            onChange={(e) => setType(e.target.value)}
                             input={<BootstrapInput />}
                         >
-                            
                             <MenuItem value="MOBILE">Mobile</MenuItem>
-                            <MenuItem value="ACCESSORY">ACCESSORY</MenuItem>
+                            <MenuItem value="ACCESSORY">Accessory</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>

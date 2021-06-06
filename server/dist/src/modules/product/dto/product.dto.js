@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreatedProductDto = exports.ProductDto = exports.UpdateProductDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
@@ -51,7 +50,7 @@ class ProductDto extends UpdateProductDto {
 __decorate([
     swagger_1.ApiProperty(),
     class_validator_1.IsArray(),
-    __metadata("design:type", typeof (_a = typeof Array !== "undefined" && Array) === "function" ? _a : Object)
+    __metadata("design:type", Array)
 ], ProductDto.prototype, "images", void 0);
 exports.ProductDto = ProductDto;
 class CreatedProductDto extends ProductDto {

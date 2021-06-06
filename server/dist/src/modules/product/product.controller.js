@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b, _c, _d, _e, _f, _g;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
 const common_1 = require("@nestjs/common");
@@ -75,7 +74,7 @@ __decorate([
     __param(0, common_1.Param('productId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
+    __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getById", null);
 __decorate([
     common_1.Get('getSellerProducts'),
@@ -84,7 +83,7 @@ __decorate([
     __param(0, decorators_1.AuthUser()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.UserEntity]),
-    __metadata("design:returntype", typeof (_b = typeof Promise !== "undefined" && Promise) === "function" ? _b : Object)
+    __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getSellerProducts", null);
 __decorate([
     common_1.Post('add'),
@@ -95,7 +94,7 @@ __decorate([
     __param(0, common_1.Body()), __param(1, decorators_1.AuthUser()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [product_dto_1.ProductDto, user_entity_1.UserEntity]),
-    __metadata("design:returntype", typeof (_c = typeof Promise !== "undefined" && Promise) === "function" ? _c : Object)
+    __metadata("design:returntype", Promise)
 ], ProductController.prototype, "addProduct", null);
 __decorate([
     common_1.Post('update/:productId'),
@@ -105,7 +104,7 @@ __decorate([
     __param(0, common_1.Body()), __param(1, common_1.Param('productId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [product_dto_1.UpdateProductDto, Number]),
-    __metadata("design:returntype", typeof (_d = typeof Promise !== "undefined" && Promise) === "function" ? _d : Object)
+    __metadata("design:returntype", Promise)
 ], ProductController.prototype, "updateProduct", null);
 __decorate([
     common_1.Post('updateProductImages/:productId'),
@@ -115,7 +114,7 @@ __decorate([
     __param(0, common_1.Body()), __param(1, common_1.Param('productId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array, Number]),
-    __metadata("design:returntype", typeof (_e = typeof Promise !== "undefined" && Promise) === "function" ? _e : Object)
+    __metadata("design:returntype", Promise)
 ], ProductController.prototype, "updateProductImages", null);
 __decorate([
     common_1.Delete('delete/:productId'),
@@ -136,7 +135,7 @@ __decorate([
     common_1.UseInterceptors(platform_express_1.AnyFilesInterceptor()),
     __param(0, common_1.UploadedFiles()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_f = typeof Array !== "undefined" && Array) === "function" ? _f : Object]),
+    __metadata("design:paramtypes", [Array]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "uploadFile", null);
 __decorate([
@@ -147,7 +146,7 @@ __decorate([
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array]),
-    __metadata("design:returntype", typeof (_g = typeof Promise !== "undefined" && Promise) === "function" ? _g : Object)
+    __metadata("design:returntype", Promise)
 ], ProductController.prototype, "removeProductImages", null);
 ProductController = __decorate([
     common_2.Controller('api/products'),

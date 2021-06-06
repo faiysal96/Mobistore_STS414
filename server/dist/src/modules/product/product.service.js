@@ -28,7 +28,7 @@ let ProductService = class ProductService {
     }
     async getAll(query) {
         if (!query) {
-            return await this.productRepository.find({ where: { stock: typeorm_2.MoreThan(0) }, relations: ['images'] });
+            return await this.productRepository.find({ where: { stock: typeorm_2.MoreThan(0) }, relations: ['images'], order: { updatedAt: 'DESC' } });
         }
         return await this.productRepository.find({ where: { name: typeorm_2.Like(`%${query}%`), stock: typeorm_2.MoreThan(0) }, relations: ['images'] });
     }
@@ -36,7 +36,7 @@ let ProductService = class ProductService {
         return await this.productRepository.findOne({ relations: ['images'], where: { id } });
     }
     async getSellerProducts(userId) {
-        return await this.productRepository.find({ relations: ['images'], where: { user: userId } });
+        return await this.productRepository.find({ relations: ['images'], where: { user: userId }, order: { updatedAt: 'DESC' } });
     }
     async addProduct(product, userId) {
         const productEntity = await this.productRepository.addProduct(product, userId);

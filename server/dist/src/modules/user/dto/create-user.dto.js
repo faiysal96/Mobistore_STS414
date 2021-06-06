@@ -54,8 +54,8 @@ __decorate([
 ], CreateUserDto.prototype, "phone", void 0);
 __decorate([
     class_validator_1.IsOptional(),
-    swagger_1.ApiProperty({ enum: [user_role_enum_1.UserRole.ADMIN, user_role_enum_1.UserRole.MANAGER, user_role_enum_1.UserRole.USER, user_role_enum_1.UserRole.GHOST, user_role_enum_1.UserRole.GUEST] }),
-    class_validator_1.IsIn([user_role_enum_1.UserRole.ADMIN, user_role_enum_1.UserRole.MANAGER, user_role_enum_1.UserRole.USER, user_role_enum_1.UserRole.GHOST, user_role_enum_1.UserRole.GUEST]),
+    swagger_1.ApiProperty({ enum: [user_role_enum_1.UserRole.ADMIN, user_role_enum_1.UserRole.USER] }),
+    class_validator_1.IsIn([user_role_enum_1.UserRole.ADMIN, user_role_enum_1.UserRole.USER]),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "role", void 0);
 exports.CreateUserDto = CreateUserDto;

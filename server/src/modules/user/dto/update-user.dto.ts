@@ -29,6 +29,6 @@ export class UpdateUserDto {
 
   @IsOptional()
   @ApiProperty()
-  @IsIn([UserRole.ADMIN, UserRole.MANAGER, UserRole.USER, UserRole.GHOST, UserRole.GUEST])
+  @IsIn([UserRole.ADMIN, UserRole.USER])
   role: UserRole;
 }
