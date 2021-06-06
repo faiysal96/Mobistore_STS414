@@ -9,6 +9,7 @@ export default makeStyles(theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    paddingBottom: '0',
     width: `calc(100vw - 240px)`,
     minHeight: "100vh",
   },
@@ -25,6 +26,20 @@ export default makeStyles(theme => ({
   link: {
     '&:not(:first-child)': {
       paddingLeft: 15
-    }
+    },
+    color: '#ffffff'
+  },
+  foot: {
+    backgroundColor: theme.palette.primary.main,
+    color: 'gray',
+    padding: '30px'
+
+  },
+  foot1: {
+    backgroundColor: theme.palette.primary.main,
+    color: 'gray',
+    padding: '30px',
+    marginTop: '0 !important'
+
   }
 }));

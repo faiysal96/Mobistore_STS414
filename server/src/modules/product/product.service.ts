@@ -20,18 +20,18 @@ export class ProductService {
     /**
      *  getAll Products for Uses to see
      */
-    async getAll(query: string): Promise<CreatedProductDto[]> {
+    async getAll(query: string): Promise<any[]> {
         if (!query) {
             return await this.productRepository.find({ where: { stock: MoreThan(0) }, relations: ['images'] })
         }
         return await this.productRepository.find({ where: { name: Like(`%${query}%`), stock: MoreThan(0) }, relations: ['images'] })
     }
 
-    async getById(id: number): Promise<CreatedProductDto> {
+    async getById(id: number): Promise<any> {
         return await this.productRepository.findOne({ relations: ['images'], where: { id } })
     }
 
-    async getSellerProducts(userId: number): Promise<CreatedProductDto[]> {
+    async getSellerProducts(userId: number): Promise<any[]> {
         return await this.productRepository.find({ relations: ['images'], where: { user: userId } })
     }
 
@@ -41,7 +41,7 @@ export class ProductService {
         return productEntity;
     }
 
-    async updateProduct(product: UpdateProductDto, id: number): Promise<ProductDto> {
+    async updateProduct(product: UpdateProductDto, id: number): Promise<any> {
         return await this.productRepository.updateProduct(product, id);
     }
 

@@ -37,7 +37,6 @@ export class OrderEntity extends AbstractEntity {
   })
   user: UserEntity;
 
-  @JoinColumn()
   @OneToMany(() => OrderItemEntity, orderItem => orderItem.id, { cascade: true })
   orderItems: Array<OrderItemEntity>;
 

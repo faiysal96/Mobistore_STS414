@@ -8,19 +8,20 @@ import { OrderEntity } from './order.entity';
 @Entity({ name: 'order_item' })
 export class OrderItemEntity extends AbstractEntity {
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   quantity: number;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   productId: number;
 
-  @Column({nullable: false})
+  @Column({ nullable: false })
   orderId: number;
 
-  @ManyToOne(() => OrderEntity, order => order.orderItems, {onDelete: 'CASCADE'})
+  @ManyToOne(() => OrderEntity, order => order.id, { onDelete: 'CASCADE' })
+  @JoinColumn()
   order: OrderEntity;
 
-  @ManyToOne(() => ProductEntity, product => product.orderItems, {onDelete: 'NO ACTION',})
+  @ManyToOne(() => ProductEntity, product => product.orderItems, { onDelete: 'NO ACTION', })
   product: ProductEntity;
 
 }

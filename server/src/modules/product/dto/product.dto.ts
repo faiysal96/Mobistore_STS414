@@ -14,6 +14,11 @@ export class UpdateProductDto {
   readonly name: string;
 
   @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  readonly type: string;
+
+  @ApiProperty()
   @IsNumber()
   @IsNotEmpty()
   readonly prize: number;

@@ -31,12 +31,15 @@ import { useHistory } from 'react-router-dom';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
 import RemoveCircleOutlineOutlinedIcon from '@material-ui/icons/RemoveCircleOutlineOutlined';
+import useStyles from "./styles";
 
 import AddIcon from '@material-ui/icons/Add';
 
 import RemoveIcon from '@material-ui/icons/Remove';
 
 export default function ViewProduct(props) {
+
+    const classes = useStyles()
 
     const [addedToCart, setIsAddedToCart] = useState(false);
     const [isWishListed, setIsWishListed] = useState(false);
@@ -101,16 +104,14 @@ export default function ViewProduct(props) {
 
     return <>
         <PageTitle title={name} />
-        <Card>
-
-            <Grid container spacing={2} justify="space-around"
+        <Card style={{padding: '30px'}}>
+            <Grid container spacing={2} justify="space-around" direction="row"
                 alignItems="center"
             >
-                <Grid item>
+                <Grid item spacing={1}>
                     <ImageGallery items={images} showPlayButton={false} />
-
                 </Grid>
-                <Grid item >
+                <Grid item spacing={1}>
                     <Typography variant="h6">{name}</Typography>
                     <br></br>
                     <Typography variant="subtitle2">{description}</Typography>

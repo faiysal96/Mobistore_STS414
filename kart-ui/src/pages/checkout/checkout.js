@@ -151,8 +151,8 @@ export function CheckoutPage(props) {
         <Grid container justify="center">
             <div style={{ width: '90%' }}>
                 <Card style={{ padding: '20px 30px', width: '100%' }}>
-                    <Typography variant="h6" weight="medium">Cart</Typography>
-                    <Grid wrap="nowrap" style={{ marginTop: '70px' }}><List component="nav" aria-label="main mailbox folders" id="cartContent">
+                    <Typography variant="h5" weight="medium">Your Cart Deatils</Typography>
+                    <Grid wrap="nowrap" style={{ marginTop: '40px' }}><List component="nav" aria-label="main mailbox folders" id="cartContent">
                         {cartItems.map(cart => <><Link to={'/app/product/view/' + cart.product.id}><ListItem button >
                             <ListItemIcon>
                                 <AvatarGroup max={2}>
@@ -189,16 +189,19 @@ export function CheckoutPage(props) {
                     </List>
                         <br></br>
                         <Grid container justify="flex-end" alignItems="flex-end">
-                            <Typography variant="h4"> Total Cart Value: $ {getTotal(cartItems)}</Typography>
+                            <Typography variant="h5"> Total Cart Value: $<strong>{getTotal(cartItems)}
+                                </strong> </Typography>
                         </Grid>
                     </Grid>
                     <br></br>
 
                     <Grid container direction="column" justify="center">
                         {error && <Typography color="secondary" className={classes.errorMessage}>
-                            Something is wrong with your login or password :(
+                            Something Worng with your products :(
                                 </Typography>}
+                                <br></br>
                         <Typography variant="subtitle1">Order Details</Typography>
+                        <br></br>
                         <TextField id="checkoutname"
                             InputProps={{
                                 classes: {
@@ -207,7 +210,9 @@ export function CheckoutPage(props) {
                                 },
                             }}
                             value={order_to_name}
+                            label="Order Name"
                             onChange={e => setOrderToName(e.target.value)}
+                            helperText="*Please enter the name of the person"
                             margin="normal"
                             placeholder="Name"
                             type="text"
@@ -217,12 +222,14 @@ export function CheckoutPage(props) {
                             id="checkoutAdress"
                             rows={3}
                             multiline
+                            label="Address"
                             InputProps={{
                                 classes: {
                                     underline: classes.textFieldUnderline,
                                     input: classes.textField,
                                 },
                             }}
+                            helperText="Enter the address of order."
                             value={address}
                             onChange={e => setAddress(e.target.value)}
                             margin="normal"
@@ -238,8 +245,10 @@ export function CheckoutPage(props) {
                                     input: classes.textField,
                                 },
                             }}
+                            label="Phone Number"
                             value={phone}
                             onChange={e => setPhoneValue(e.target.value)}
+                            helperText="Please enter phone number for the executive to contact"
                             margin="normal"
                             placeholder="Phone"
                             type="number"
@@ -247,6 +256,7 @@ export function CheckoutPage(props) {
                         />
                         <TextField
                             id="notes"
+                            label="Notes"
                             InputProps={{
                                 classes: {
                                     underline: classes.textFieldUnderline,
@@ -256,6 +266,8 @@ export function CheckoutPage(props) {
                             value={notes}
                             onChange={e => setNotes(e.target.value)}
                             margin="normal"
+                            helperText="Please enter notes for us to take any actions"
+
                             placeholder="Add Notes"
                             type="text"
                             variant="outlined"
@@ -263,10 +275,12 @@ export function CheckoutPage(props) {
                         <br></br>
                         <Divider />
                         <br></br>
-                        <Typography variant="subtitle2">Payment Details</Typography>
+                        <Typography variant="h5">Payment Details</Typography>
+                        <br></br>
                         <TextField
                             id="paymentMethod"
                             select
+                            label="Payment Type"
                             InputProps={{
                                 classes: {
                                     underline: classes.textFieldUnderline,
@@ -276,6 +290,7 @@ export function CheckoutPage(props) {
                             value={paymentMethod}
                             onChange={e => setpaymentMethod(e.target.value)}
                             margin="dense"
+                            helperText="Currently we are only accepting Cards"
                             placeholder="Name"
                             type="text"
                             variant="outlined"
@@ -292,9 +307,11 @@ export function CheckoutPage(props) {
                                     input: classes.textField,
                                 },
                             }}
+                            label="Card Number"
                             value={cardInfo}
                             onChange={e => setcardInfo(e.target.value)}
                             margin="dense"
+                            helperText="Must be a valid card"
                             placeholder="Name"
                             type="number"
                             variant="outlined"
@@ -302,6 +319,7 @@ export function CheckoutPage(props) {
                         </TextField>
                         <TextField
                             id="cvv"
+                            label="CVV"
                             InputProps={{
                                 classes: {
                                     underline: classes.textFieldUnderline,
@@ -309,6 +327,7 @@ export function CheckoutPage(props) {
                                 },
                             }}
                             value={cvv}
+                            helperText="Please enter CVV present at back of card"
                             onChange={e => setCvv(e.target.value)}
                             margin="dense"
                             max={3}
@@ -343,7 +362,7 @@ export function CheckoutPage(props) {
                                         id="placeOrderBtn"
                                         disabled={
                                             phone.length === 0 ||
-                                            order_to_name.length === 0 || address.length === 0
+                                            order_to_name.length === 0 || address.length === 0 || String(cardInfo).length !=16
                                         }
                                         // onClick={() => onPlaceOrder()}
                                         onClick={() => setdialogOpen(true)}
@@ -381,6 +400,7 @@ export function CheckoutPage(props) {
                                         onChange={(e) => setOtp(e.target.value)}
                                         variant="outlined"
                                         label="Enter OTP"
+                                        helperText="Please check your mobile phone and enter OTP - Ex:12345"
                                         type="password"
                                         InputProps={{
                                             classes: {

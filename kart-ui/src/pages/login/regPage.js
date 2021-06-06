@@ -75,6 +75,7 @@ function RegPage(props) {
           </Typography>}
           <TextField
             id="firstName"
+            autoFocus
             InputProps={{
                 classes: {
                     underline: classes.textFieldUnderline,
@@ -114,6 +115,7 @@ function RegPage(props) {
             value={loginValue}
             onChange={e => setLoginValue(e.target.value)}
             margin="normal"
+            name="email"
             placeholder="Email Adress"
             type="email"
             fullWidth

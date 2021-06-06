@@ -2,26 +2,66 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { getProductInfo, addProduct, updateProduct, deleteProduct, addImage, removeImage, updateProductImages } from "../Admin/services/admin.service";
+
 import {
     Grid,
     LinearProgress,
     Select,
     OutlinedInput,
+    InputBase,
+    FormControl,
     MenuItem,
     Button,
+    InputLabel,
     Input,
+    Card,
     TextField,
     IconButton
 } from "@material-ui/core";
 import { Skeleton } from '@material-ui/lab';
 
-import { DropzoneArea } from 'material-ui-dropzone'
 
-
-
-import { getProductInfo, addProduct, updateProduct, deleteProduct, addImage, removeImage , updateProductImages} from "../Admin/services/admin.service";
 import PageTitle from "../../components/PageTitle";
 import { Delete } from "@material-ui/icons";
+
+const BootstrapInput = withStyles((theme) => ({
+    root: {
+      'label + &': {
+        marginTop: theme.spacing(3),
+      },
+    },
+    input: {
+      borderRadius: 4,
+      position: 'relative',
+      backgroundColor: theme.palette.background.paper,
+      border: '1px solid #ced4da',
+      fontSize: 16,
+      padding: '10px 26px 10px 12px',
+      transition: theme.transitions.create(['border-color', 'box-shadow']),
+      // Use the system font instead of the default Roboto font.
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+      '&:focus': {
+        borderRadius: 4,
+        borderColor: '#80bdff',
+        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+      },
+    },
+  }))(InputBase);
+
+
 
 
 export default function ProductCreateAndEdit(props) {
@@ -33,6 +73,8 @@ export default function ProductCreateAndEdit(props) {
     const [prize, setPrize] = useState()
     const [stock, setStock] = useState()
     const [images, setImages] = useState([])
+    const [type, setType] = useState("MOBILE")
+
     const [intialFiles, setintialFiles] = useState([])
     const [isLoading, setisLoading] = useState(false);
     const [formtouch, setformtouch] = useState(false)
@@ -42,7 +84,7 @@ export default function ProductCreateAndEdit(props) {
         setisLoading(true)
         if (id) {
             if (name && description && (prize || prize == 0) && (stock || stock == 0)) {
-                updateProduct({ name, description, prize: parseFloat(prize), stock:parseInt(stock) }, id).then(res => {
+                updateProduct({ name, description, prize: parseFloat(prize), stock: parseInt(stock) }, id).then(res => {
                     setisLoading(false)
 
                 }).catch(err => {
@@ -132,28 +174,45 @@ export default function ProductCreateAndEdit(props) {
         <PageTitle title="Add Product" />
         <Grid container direction="column" justify="center"
             alignItems="stretch">
-            <Grid item direction="column" justify="center"
+            <Grid item container direction="column" justify="center"
                 alignItems="center" >
-                <Grid item container >
-                    <TextField fullWidth placeholder="Enter Title" type="text" variant="outlined" label="Title" style={{ width: '100%', margin: '20px' }} error={!name && formtouch} onChange={(e) => setName(e.target.value)} value={name}></TextField>
+                <Grid item  container>
+                    <TextField fullWidth placeholder="Enter Title" type="text" variant="outlined" label="Title" style={{ width: '70%', margin: '20px' }} error={!name && formtouch} onChange={(e) => setName(e.target.value)} value={name}></TextField>
                 </Grid>
                 <Grid item container >
-                    <TextField fullWidth placeholder="Enter Description" type="text" variant="outlined" label="Description" style={{ width: '100%', margin: '20px' }} value={description} multiline error={!description && formtouch} rows={4} onChange={(e) => setDescription(e.target.value)}></TextField>
+                    <TextField fullWidth placeholder="Enter Description" type="text" variant="outlined" label="Description" style={{ width: '70%', margin: '20px' }} value={description} multiline error={!description && formtouch} rows={4} onChange={(e) => setDescription(e.target.value)}></TextField>
+                </Grid>
+                <Grid item container>
+                    <FormControl className="m-2" style={{ width: '70%', margin: '15px' }}>
+                        <InputLabel id="demo-customized-select-label">Catagory</InputLabel>
+                        <Select
+                            
+                            labelId="demo-customized-select-label"
+                            id="demo-customized-select"
+                            value={type}
+                            onChange={(e)=> setType(e.target.value)}
+                            input={<BootstrapInput />}
+                        >
+                            
+                            <MenuItem value="MOBILE">Mobile</MenuItem>
+                            <MenuItem value="ACCESSORY">ACCESSORY</MenuItem>
+                        </Select>
+                    </FormControl>
                 </Grid>
                 <Grid item container >
                     <TextField fullWidth placeholder="Enter price" InputLabelProps={{
                         shrink: true,
-                    }} type="number" variant="outlined" label="Price" style={{ width: '100%', margin: '20px' }} value={prize} error={!!!prize && prize != 0 && formtouch} onChange={(e) => setPrize(parseInt(e.target.value))}></TextField>
+                    }} type="number" variant="outlined" label="Price" style={{ width: '70%', margin: '20px' }} value={prize} error={!!!prize && prize != 0 && formtouch} onChange={(e) => setPrize(parseInt(e.target.value))}></TextField>
                 </Grid>
 
                 <Grid item container >
                     <TextField fullWidth placeholder="Enter stock" InputLabelProps={{
                         shrink: true,
-                    }} type="number" variant="outlined" label="Stock" style={{ width: '100%', margin: '20px' }} value={stock} error={!stock && stock != 0 && formtouch} onChange={(e) => setStock(parseInt(e.target.value))}></TextField>
+                    }} type="number" variant="outlined" label="Stock" style={{ width: '70%', margin: '20px' }} value={stock} error={!stock && stock != 0 && formtouch} onChange={(e) => setStock(parseInt(e.target.value))}></TextField>
                 </Grid>
             </Grid>
 
-            <Grid item container style={{ width: '90%' }} justify="center"
+            <Grid item container style={{ width: '70%' }} justify="center"
                 alignItems="center">
                 <label style={{ margin: '0 30px' }}>Upload Images:</label>
                 <input type="file" multiple accept="image/*" onChange={(e) => { onImageUpload(e.target.files); e.target.value = null; }} />
@@ -168,7 +227,7 @@ export default function ProductCreateAndEdit(props) {
 
             </Grid>
         </Grid>
-        <Grid container spacing={3} justify="center" alignItems="center">
+        <Grid container spacing={3} justify="center" alignItems="center" style={{ width: '70%' }}>
             {!isLoading && <Button variant="contained"
                 size="large"
                 style={{ margin: '50px' }}

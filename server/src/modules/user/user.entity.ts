@@ -5,6 +5,8 @@ import { AbstractEntity } from '../../common/abstract.entity';
 import { ProductEntity } from '../product/product.entity';
 import { CartItemEntity } from '../cart/cart.entity';
 import { OrderEntity } from '../order/order.entity';
+import { SupportEntity } from '../support/support.entity';
+import { Exclude } from 'class-transformer';
 // import { ProductEntity } from '../products/products.entity';
 
 
@@ -48,6 +50,10 @@ export class UserEntity extends AbstractEntity {
   @OneToMany(type => OrderEntity, order => order.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   orders: OrderEntity[];
+
+  @OneToMany(type => SupportEntity, issue => issue.id, { onDelete: 'CASCADE' })
+  @JoinColumn()
+  issues: SupportEntity[];
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.salt);

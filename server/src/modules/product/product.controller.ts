@@ -32,14 +32,14 @@ export class ProductController {
     }
 
     @Get('getSellerProducts')
-    @UseGuards(new RoleGuard(UserRole.MANAGER))
+    @UseGuards(new RoleGuard(UserRole.ADMIN))
     @ApiResponse({ status: 200, description: 'Get Seller Products' })
     async getSellerProducts(@AuthUser() user: UserEntity): Promise<CreatedProductDto[]> {
         return await this.productService.getSellerProducts(user.id);
     }
 
     @Post('add')
-    @UseGuards(new RoleGuard(UserRole.MANAGER))
+    @UseGuards(new RoleGuard(UserRole.ADMIN))
     @UsePipes(ValidationPipe)
     @ApiResponse({ status: 200, description: 'Get All Products' })
     @ApiResponse({ status: 403, description: 'Role is limited to ADMIN and MANGER' })
@@ -48,7 +48,7 @@ export class ProductController {
     }
 
     @Post('update/:productId')
-    @UseGuards(new RoleGuard(UserRole.MANAGER))
+    @UseGuards(new RoleGuard(UserRole.ADMIN))
     @ApiResponse({ status: 200, description: 'Get All Products' })
     @UseInterceptors(FileInterceptor('file'))
     async updateProduct(@Body() productDto: UpdateProductDto, @Param('productId', ParseIntPipe) id: number): Promise<any> {
@@ -57,7 +57,7 @@ export class ProductController {
     }
 
     @Post('updateProductImages/:productId')
-    @UseGuards(new RoleGuard(UserRole.MANAGER))
+    @UseGuards(new RoleGuard(UserRole.ADMIN))
     @ApiResponse({ status: 200, description: 'Get All Products' })
     @UseInterceptors(FileInterceptor('file'))
     async updateProductImages(@Body() filePaths: string[], @Param('productId', ParseIntPipe) id: number): Promise<any> {
@@ -66,7 +66,7 @@ export class ProductController {
     }
 
     @Delete('delete/:productId')
-    @UseGuards(new RoleGuard(UserRole.MANAGER))
+    @UseGuards(new RoleGuard(UserRole.ADMIN))
     @ApiResponse({ status: 204, description: 'Deleted product' })
     @UseInterceptors(FileInterceptor('file'))
     async deleteProduct(@Param('productId', ParseIntPipe) productId: number) {
@@ -75,7 +75,7 @@ export class ProductController {
 
     @Post('upload')
     @ApiConsumes('multipart/form-data')
-    @UseGuards(new RoleGuard(UserRole.MANAGER))
+    @UseGuards(new RoleGuard(UserRole.ADMIN))
     @ApiFile()
     @ApiResponse({ status: 201, description: 'Upload Product Image sucess' })
     @UseInterceptors(AnyFilesInterceptor())
@@ -84,7 +84,7 @@ export class ProductController {
     }
 
     @Post('removeImages')
-    @UseGuards(new RoleGuard(UserRole.MANAGER))
+    @UseGuards(new RoleGuard(UserRole.ADMIN))
     @ApiResponse({ status: 200, description: 'Get All products' })
     @UseInterceptors(FileInterceptor('file'))
     async removeProductImages(@Body() fileList: string[]): Promise<{ success: Boolean }> {

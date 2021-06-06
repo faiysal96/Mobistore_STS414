@@ -24,7 +24,7 @@ function UserProvider({ children }) {
     isAuthenticated: !!localStorage.getItem("id_token"),
     isSeller: false,
     isDrawerOpen: false,
-    name: localStorage.getItem("role"),
+    name: localStorage.getItem("name"),
     role: localStorage.getItem("role"),
   });
 

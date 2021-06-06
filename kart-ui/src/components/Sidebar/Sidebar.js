@@ -10,6 +10,7 @@ import {
   LibraryBooks as LibraryIcon,
   HelpOutline as FAQIcon,
   ArrowBack as ArrowBackIcon,
+  ErrorOutline,
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
@@ -34,61 +35,21 @@ import {
 } from "../../context/UserContext";
 
 const structure = [
-  { id: 0, label: "Home", link: "/app/dashboard", icon: <HomeIcon />, role: ['GHOST'] },
-  // {
-  //   id: 1,
-  //   label: "Typography",
-  //   link: "/app/typography",
-  //   icon: <TypographyIcon />,
-  // },
-  { id: 2, label: "Orders", link: "/app/tables", icon: <TableIcon />, role: ['GHOST'] },
-  {
-    id: 3,
-    label: "Notifications",
-    link: "/app/notifications",
-    icon: <NotificationsIcon />,
-    role: ['GHOST']
-  },
-  // {
-  //   id: 4,
-  //   label: "UI Elements",
-  //   link: "/app/ui",
-  //   icon: <UIElementsIcon />,
-  //   children: [
-  //     { label: "Icons", link: "/app/ui/icons" },
-  //     { label: "Charts", link: "/app/ui/charts" },
-  //     { label: "Maps", link: "/app/ui/maps" },
-  //   ],
-  // },
+  { id: 0, label: "Home", link: "/app/dashboard", icon: <HomeIcon />, role: ['USER'] },
+
+  { id: 2, label: "My Orders", link: "/app/my-orders", icon: <TableIcon />, role: ['USER'] },
+  
   { id: 5, type: "divider" },
-  { id: 6, type: "title", label: "SELLER", role: ['ADMIN', "MANAGER"] },
-  { id: 7, label: "Mange Products", link: "/app/admin", icon: <LibraryIcon />, role: ['ADMIN', "MANAGER"] },
-  { id: 6, type: "title", label: "HELP", role: ['GHOST'] },
-  { id: 8, label: "Support", link: "https://google.com/forum", icon: <SupportIcon />, role: ['GHOST'] },
-  { id: 9, label: "FAQ", link: "https://google.com/forum", icon: <FAQIcon />, role: ['GHOST'] },
+  { id: 6, type: "title", label: "SELLER", role: ['ADMIN'] },
+  { id: 7, label: "Mange Products", link: "/app/admin", icon: <LibraryIcon />, role: ['ADMIN'] },
+  { id: 8, label: "Mange Orders", link: "/app/orders-admin", icon: <TableIcon />, role: ['ADMIN'] },
+  { id: 9, label: "Mange Issues", link: "/app/support-admin", icon: <ErrorOutline />, role: ['ADMIN'] },
   { id: 10, type: "divider" },
-  // { id: 11, type: "title", label: "PROJECTS" },
-  // {
-  //   id: 12,
-  //   label: "My recent",
-  //   link: "",
-  //   icon: <Dot size="small" color="warning" />,
-  //   role: ['GHOST']
-  // },
-  // {
-  //   id: 13,
-  //   label: "Starred",
-  //   link: "",
-  //   icon: <Dot size="small" color="primary" />,
-  //   role: ['GHOST']
-  // },
-  // {
-  //   id: 14,
-  //   label: "Background",
-  //   link: "",
-  //   icon: <Dot size="small" color="secondary" />,
-  //   role: ['GHOST']
-  // },
+  { id: 11, type: "title", label: "HELP", role: ['USER'] },
+  { id: 12, label: "Support", link: "/app/support", icon: <SupportIcon />, role: ['USER'] },
+  { id: 13, label: "FAQ", link: "https://google.com/forum", icon: <FAQIcon />, role: ['USER'] },
+  { id: 14, type: "divider" },
+  
 ];
 
 function Sidebar({ location }) {

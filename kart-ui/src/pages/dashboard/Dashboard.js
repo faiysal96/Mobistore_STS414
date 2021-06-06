@@ -138,7 +138,7 @@ export default function Dashboard(props) {
       </Grid>
       }
       {!isLoading && <Grid container alignItems="stretch" direction="row" id="productsList"
-        spacing={4}>
+        spacing={6}>
         {products.filter(product => product.name.toLowerCase().includes(searchKey.toLowerCase())).map(product => <Grid item lg={3} md={4} sm={6} xs={12} key={product.id}>
           <Link to={'/app/product/view/' + product.id}>
             <Card className={classes.root} style={{ height: '100%' }}>
@@ -152,7 +152,7 @@ export default function Dashboard(props) {
                   <Typography gutterBottom variant="h6" component="h2">
                     {product.name}
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
+                  <Typography variant="body1" color="textSecondary" component="p">
                     $ {product.prize}
                   </Typography>
                 </CardContent>

@@ -128,7 +128,7 @@ export default makeStyles(theme => ({
     color: '#fff',
   },
   media: {
-    height: '250px',
+    height: '200px',
     backgroundSize: 'contain'
   },
   searchInput: {

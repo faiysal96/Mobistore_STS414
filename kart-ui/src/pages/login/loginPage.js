@@ -70,6 +70,7 @@ function LoginPage(props) {
         </Typography>}
         <TextField
             id="email"
+            autoFocus
             InputProps={{
                 classes: {
                     underline: classes.textFieldUnderline,
@@ -79,10 +80,13 @@ function LoginPage(props) {
             value={loginValue}
             onChange={e => setLoginValue(e.target.value)}
             margin="normal"
+            helperText="*Enter your Email to login"
             placeholder="Email Adress"
             type="email"
             fullWidth
         />
+        <br></br>
+
         <TextField
             id="password"
             InputProps={{
@@ -94,6 +98,7 @@ function LoginPage(props) {
             value={passwordValue}
             onChange={e => setPasswordValue(e.target.value)}
             margin="normal"
+            helperText="*Password is atleast 8 character"
             placeholder="Password"
             type="password"
             fullWidth

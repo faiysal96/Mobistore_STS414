@@ -21,9 +21,12 @@ import {
 import Alert from '@material-ui/lab/Alert';
 
 import CloseIcon from "@material-ui/icons/Close";
+import { useUserDispatch } from "../../context/UserContext";
+
 
 
 export function UserPage(props) {
+    var dispatch = useUserDispatch()
     var classes = useStyles();
     var [isLoading, setIsLoading] = useState(false);
     var [error, setError] = useState(null);
@@ -35,7 +38,7 @@ export function UserPage(props) {
 
     function updateUser() {
         let postData = {}
-        if(phone) {
+        if (phone) {
             postData = { firstName, lastName, phone }
         }
         else {
@@ -43,7 +46,9 @@ export function UserPage(props) {
 
         }
         updateUserInfo(postData).then(re => {
-            setOpen(true)
+            setOpen(true);
+            localStorage.setItem('name', re.firstName + ' ' + re.lastName)
+            dispatch({ type: 'LOGIN_SUCCESS', name: re.firstName + ' ' + re.lastName });
         })
     }
 

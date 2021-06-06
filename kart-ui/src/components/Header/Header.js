@@ -21,6 +21,7 @@ import {
   Person as AccountIcon,
   Search as SearchIcon,
   Send as SendIcon,
+  BorderAll,
   ArrowBack as ArrowBackIcon,
   ShoppingCartOutlined as Cart,
   Delete
@@ -28,6 +29,7 @@ import {
 import classNames from "classnames";
 
 import { useHistory } from 'react-router-dom';
+import logo from "./logo.svg";
 
 
 import List from '@material-ui/core/List';
@@ -56,27 +58,6 @@ import { getCartItems, removeFromCart, setCartQuantity, updateCartQunatityApi } 
 
 const messages = [];
 
-const notifications = [
-  { id: 0, color: "warning", message: "Check out this awesome ticket" },
-  {
-    id: 1,
-    color: "success",
-    type: "info",
-    message: "What is the best way to get ...",
-  },
-  {
-    id: 2,
-    color: "secondary",
-    type: "notification",
-    message: "This is just a simple notification",
-  },
-  {
-    id: 3,
-    color: "primary",
-    type: "e-commerce",
-    message: "12 new orders has arrived today",
-  },
-];
 
 export default function Header(props) {
   var classes = useStyles();
@@ -180,9 +161,13 @@ export default function Header(props) {
               />
             )}
         </IconButton>
-        <Typography variant="h6" weight="medium" className={classes.logotype}>
-          Mobi Store
+        <img src={logo} alt="logo" className={classes.logotypeImage} />
+        <Link to="/">
+          <Typography variant="h6" weight="medium" className={classes.logotype}>
+            Mobi Store
         </Typography>
+        </Link>
+
         <div className={classes.grow} />
         {/* <Button component={Link} href="https://google.com/templates/react-material-admin-full" variant={"outlined"} color={"secondary"} className={classes.purchaseBtn}>Unlock full version</Button>
         <div
@@ -277,7 +262,7 @@ export default function Header(props) {
             </Typography>
           </div>
           {messages.map(message => (
-            <MenuItem key={message.id} className={classes.messageNotification}>
+            <MenuItem key={message.id} className={classes.messageNotification} >
               <div className={classes.messageNotificationSide}>
                 <UserAvatar color={message.variant} name={message.name} />
                 <Typography size="sm" color="text" colorBrightness="secondary">
@@ -309,24 +294,7 @@ export default function Header(props) {
             <SendIcon className={classes.sendButtonIcon} />
           </Fab>
         </Menu>
-        <Menu
-          id="notifications-menu"
-          open={Boolean(notificationsMenu)}
-          anchorEl={notificationsMenu}
-          onClose={() => setNotificationsMenu(null)}
-          className={classes.headerMenu}
-          disableAutoFocusItem
-        >
-          {notifications.map(notification => (
-            <MenuItem
-              key={notification.id}
-              onClick={() => setNotificationsMenu(null)}
-              className={classes.headerMenuItem}
-            >
-              <Notification {...notification} typographyVariant="inherit" />
-            </MenuItem>
-          ))}
-        </Menu>
+
         <Menu
           id="profile-menu"
           open={Boolean(profileMenu)}
@@ -371,22 +339,34 @@ export default function Header(props) {
             <AccountIcon className={classes.profileMenuIcon} /> Tasks
           </MenuItem> */}
           <MenuItem
+            onClick={() => history.push('/app/my-orders')}
             className={classNames(
               classes.profileMenuItem,
               classes.headerMenuItem,
             )}
           >
-            <AccountIcon className={classes.profileMenuIcon} /> Orders
+            <BorderAll className={classes.profileMenuIcon} /><Link to={'/app/my-orders'}> My Orders </Link>
           </MenuItem>
           <div className={classes.profileMenuUser}>
-            <Typography
+            <Fab
+              variant="extended"
+              color="primary"
+              onClick={() => signOut(userDispatch, props.history)}
+              disabled={!cartItems.length}
+              aria-label="Add"
+              className={classes.sendMessageButton}
+            >
+              Sign Out
+            <SendIcon className={classes.sendButtonIcon} />
+            </Fab>
+            {/* <Typography
               className={classes.profileMenuLink}
               color="primary"
               id="signOutText"
               onClick={() => signOut(userDispatch, props.history)}
             >
               Sign Out
-            </Typography>
+            </Typography> */}
           </div>
         </Menu>
         {/* <Button onClick={() => setDrawer(!drawer)}>anchor</Button> */}
@@ -396,11 +376,11 @@ export default function Header(props) {
               <Typography variant="h6" weight="medium">Cart</Typography>
             </Card>
 
-            <Grid wrap="nowrap" style={{ marginTop: '70px' }}><List component="nav" aria-label="main mailbox folders" id="cartContent">
-              {cartItems.map(cart => <><Link to={'/app/product/edit/' + cart.product.id}><ListItem button >
+            <Grid style={{ marginTop: '70px' }}><List component="nav" aria-label="main mailbox folders" id="cartContent">
+              {cartItems.map(cart => <><Link to={'/app/product/view/' + cart.product.id} onClick={() => setDrawer(false)} key={cart.id}><ListItem button >
                 <ListItemIcon>
                   <AvatarGroup max={2}>
-                    {cart.product.images.map(image => <Avatar alt="Remy Sharp" src={'http://localhost:5000/' + image.path} />)}
+                    {cart.product.images.map(image => <Avatar alt="Remy Sharp" src={'http://localhost:5000/' + image.path} key={image} />)}
                   </AvatarGroup>
                 </ListItemIcon>
                 <ListItemText style={{ margin: '0 20px' }} primary={cart.product.name} secondary={
@@ -433,7 +413,7 @@ export default function Header(props) {
               </ListItem><Divider /></Link></>)}
             </List>
             </Grid>
-            <Grid justify="center">
+            <Grid >
               <Card style={{ padding: '20px 30px', position: "fixed", width: '100%', bottom: '0' }}>
                 <Divider />
                 <Fab

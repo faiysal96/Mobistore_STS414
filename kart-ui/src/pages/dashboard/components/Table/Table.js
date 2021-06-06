@@ -8,21 +8,19 @@ import {
   Chip
 } from "@material-ui/core";
 import useStyles from "../../styles";
+import { Link } from "react-router-dom";
 
 const states = {
-  sent: "success",
+  delivered: "success",
   pending: "warning",
-  declined: "secondary",
+  cancelled: "secondary",
 };
+var dateFormat = require("dateformat");
+
 
 export default function TableComponent({ data }) {
   const classes = useStyles();
-  var keys = ['No.', 'Name', 'Phone', 'Price', 'Payment Method', 'Address', 'Date', 'Status'];
-  // if (data[0]) {
-  //   keys = Object.keys(data[0]).map(i => i.toUpperCase());
-  //   keys.shift(); // delete "id" key
-  // }
-
+  var keys = ['No.', 'Name', 'Phone', 'Price', 'Payment Method', 'Address', 'Order Placed On', 'Status'];
 
   return (
     <Table className="mb-0">
@@ -34,15 +32,17 @@ export default function TableComponent({ data }) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.map(({ order_to_name, phone, prize, paymentMethod, address, updatedAt, status }, i) => (
+        {data.map(({ id, order_to_name, phone, prize, paymentMethod, address, updatedAt, status }, i) => (
           <TableRow key={i}>
-            <TableCell className="pl-3 fw-normal">{i+1}</TableCell>
-            <TableCell className="pl-3 fw-normal">{order_to_name}</TableCell>
+            <TableCell className="pl-3 fw-normal">{i + 1}</TableCell>
+            <TableCell className="pl-3 fw-normal">
+              <Link to={'/app/order-view/' + id}>
+                {order_to_name}</Link></TableCell>
             <TableCell>{phone}</TableCell>
             <TableCell>${prize}</TableCell>
             <TableCell>{paymentMethod}</TableCell>
             <TableCell>{address}</TableCell>
-            <TableCell>{updatedAt}</TableCell>
+            <TableCell>{dateFormat(updatedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")}</TableCell>
             <TableCell>
               <Chip label={status} classes={{ root: classes[states[status.toLowerCase()]] }} />
             </TableCell>
