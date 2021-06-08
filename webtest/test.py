@@ -156,7 +156,7 @@ def test_login_success():
 #     driver.close()
 
 
-# def test_sign_out():
+# def test_add_to_cart():
 #     driver = webdriver.Chrome()
 #     driver.get('http://localhost:3000/')
 #     sleep(2)
